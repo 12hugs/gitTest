@@ -37,9 +37,8 @@ public class FruitController {
         return fruitService.countFruit(name);
     }
 
-
     @GetMapping("/fruit/list")
-    public List<Fruit> notSoldMoreOrLessList(@RequestParam("option")String option,
+    public List<FruitNotSoldMoreOrLessResponseDTO> notSoldMoreOrLessList(@RequestParam("option")String option,
                                              @RequestParam("price")Integer price){
         return fruitService.notSoldMoreOrLessList(option, price);
     }

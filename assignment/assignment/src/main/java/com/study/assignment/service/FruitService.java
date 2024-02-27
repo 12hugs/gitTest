@@ -53,13 +53,22 @@ public class FruitService {
         return fruitRepository.countByName(name);
     }
 
-    public List<Fruit> notSoldMoreOrLessList(String option, Integer price) {
+    @Transactional
+    public List<FruitNotSoldMoreOrLessResponseDTO> notSoldMoreOrLessList(String option, Integer price) {
         if(option.equals("GTE") || option.equals("gte")){
-            return fruitRepository.findByPriceGreaterThan(price);
-
+            List<Fruit> fruits = fruitRepository.findByPriceGreaterThan(price);
+            List<FruitNotSoldMoreOrLessResponseDTO> response = new ArrayList<>();
+            for(Fruit fruit : fruits){
+                response.add(new FruitNotSoldMoreOrLessResponseDTO(fruit.getName(), fruit.getWarehousingDate(), fruit.getPrice()));
+            }
+            return response;
         }else if(option.equals("LTE") || option.equals("lte")) {
-            return fruitRepository.findByPriceLessThan(price);
-
+            List<Fruit> fruits = fruitRepository.findByPriceLessThan(price);
+            List<FruitNotSoldMoreOrLessResponseDTO> response = new ArrayList<>();
+            for(Fruit fruit : fruits){
+                response.add(new FruitNotSoldMoreOrLessResponseDTO(fruit.getName(), fruit.getWarehousingDate(), fruit.getPrice()));
+            }
+            return response;
         }else{
             throw new IllegalArgumentException();
         }
